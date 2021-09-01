@@ -5,40 +5,59 @@ import { Task } from './src/components/Task';
 
 export default function App() {
 
-  const [modalWindow, setModalWindow] = useState(false)
+  const [modalWindow, setModalWindow] = useState(false);
+
+  const [task, setTask] = useState();
+  const [taskItems, setTaskItems] = useState([])
+
+  const handleAddTask = () => {
+    setTaskItems([...taskItems, task]);
+    setTask(null)
+    setModalWindow(false)
+  }
 
   return (
     <View style={styles.container}>
-
+      {/* Modal PopOut */}
         <Modal 
             animationType="fade"
             transparent={true}
-            visible={modalWindow}>
+            visible={modalWindow}
+            statusBarTranslucent={true}>
                 <View style={styles.modal}>
                     <View style={styles.modalWrapper}>
                         <Text style={styles.modalText}>Enter your note</Text>
-                        <TextInput style={styles.input}></TextInput>
-                        <Button title="close" color="black" onPress={() => setModalWindow(false)}/>
+                        <TextInput style={styles.input} placeholder={'Write here'} onChangeText={text => setTask(text)} value={task}></TextInput>
+
+                        <TouchableOpacity style={styles.saveButton} onPress={() => { handleAddTask()}}>
+                          <Text style={styles.saveButtonText}>Save</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.closeButton} onPress={() => setModalWindow(false)}>
+                          <Text style={styles.closeButtonText}>Close</Text>
+                        </TouchableOpacity>
+
                     </View>
                 </View>
         </Modal>
-
+    {/* Tasks */}
       <View style={styles.mainWrapper}>
         <Text style={styles.title}>Your Notes</Text>
-        
 
         <View style={styles.items}>
 
-          <Task text={'TASK 1'}/>
-          <Task text={'TASK 2'}/>
-          <Task text={'TASK 3'}/>
+          {
+            taskItems.map((item, index) => {
+              return <Task key={index} text={item}/>
+            })
+          }
 
         </View>
 
       </View>
 
       <View style={styles.button}>
-
+{/* Add button */}
         <TouchableOpacity onPress={() => setModalWindow(true)}>
           <View style={styles.addWrapper}>
             <Text style={styles.add}>+</Text>
@@ -83,22 +102,50 @@ const styles = StyleSheet.create({
   },
   add: {
     fontSize: 40,
+    color: "#4100D7",
   },
   modal: {
     flex: 1,
-    backgroundColor: "#rgba(0,0,0, 0.3)",
+    backgroundColor: "#rgba(0,0,0, 0.4)",
   },
   modalWrapper: {
-    backgroundColor: '#fff',
+    backgroundColor: '#ECECEC',
     margin: 20,
     padding: 30,
     borderRadius: 10,
+    marginTop: 150,
     
   },
   modalText: {
     color: 'black',
     fontSize: 25,
+    fontWeight: 'bold',
     marginBottom: 20,
+  },
+  saveButton: {
+    alignSelf: 'center',
+    width: '50%',
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: '#8C00D9',
+    borderRadius: 10,
+  },
+  saveButtonText: {
+    fontWeight: 'bold',
+    color: 'white',
+    fontSize: 20,
+  },
+
+  closeButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 5,
+    padding: 5,
+
+  },
+  closeButtonText: {
+    color: '#FF7575',
+    fontSize: 20,
   },
   input: {
     fontSize: 20,
@@ -109,6 +156,8 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     height: 60,
     flexWrap: 'wrap',
+    borderWidth: 1,
+    borderColor: '#rgba(0,0,0, 0.1)',
     marginBottom: 20,
 
   }

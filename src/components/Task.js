@@ -29,10 +29,10 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
     },
     checkMark: {
-        width: 30,
-        height: 30,
+        width: 25,
+        height: 25,
         borderRadius: 30,
-        borderWidth: 1,
+        borderWidth: 2,
         borderColor: '#A385FF',
         marginRight: 10,
     },
