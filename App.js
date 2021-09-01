@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal, Button, TextInput } from 'react-native';
 import { Task } from './src/components/Task';
+import { BlurView } from '@react-native-community/blur';
 
 export default function App() {
 
@@ -72,7 +73,6 @@ export default function App() {
         </View>
 
       </View>
-
       <View style={styles.button}>
 {/* Add button */}
         <TouchableOpacity onPress={() => setModalWindow(true)}>
