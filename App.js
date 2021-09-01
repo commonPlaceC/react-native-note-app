@@ -5,7 +5,11 @@ import { Task } from './src/components/Task';
 
 export default function App() {
 
+  // Modal Window Function
+
   const [modalWindow, setModalWindow] = useState(false);
+
+  // Add Note Function
 
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([])
@@ -15,6 +19,15 @@ export default function App() {
     setTask(null)
     setModalWindow(false)
   }
+
+  // Delete Note Function
+
+  const deleteTask = (index) => {
+    let itemsCopy = [...taskItems];
+    itemsCopy.splice(index, 1);
+    setTaskItems(itemsCopy);
+  }
+
 
   return (
     <View style={styles.container}>
@@ -48,7 +61,11 @@ export default function App() {
 
           {
             taskItems.map((item, index) => {
-              return <Task key={index} text={item}/>
+              return (
+              <TouchableOpacity key={index} onPress={() => deleteTask(index)}>
+                <Task text={item}/>
+              </TouchableOpacity>
+              )
             })
           }
 
